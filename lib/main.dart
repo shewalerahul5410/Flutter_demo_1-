@@ -1,199 +1,164 @@
 import 'package:flutter/material.dart';
-import 'nextpage.dart'; // import to class here which is used to another page
 
-void main()
-{
-  runApp(MyApp()); // start to run the application from here
+void main() {
+  runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget
-{
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  Widget build(BuildContext context)
-  {
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+
+  @override
+  Widget build(BuildContext context) {
+
+    final String profileUrl =
+        "https://mir-s3-cdn-cf.behance.net/project_modules/1400/cb5096159005471.6396ac062cdb9.jpg";
+
     return MaterialApp(
-      home: FirstPage(), // rendering the first page on the screen
-    );
-  }
-}
+      debugShowCheckedModeBanner: false,
 
-class FirstPage extends StatelessWidget
-{
-  const FirstPage({super.key});
-
-  Widget build(BuildContext context)
-  {
-    return Scaffold(
-      appBar: AppBar(
-        // when we want to multiple text and rows then use the column and inside take a children
-        title: Column(
-          // using cross is help to start the writing from the start line
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("Upcoming Events",
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-            SizedBox(height: 3,), // take the space of the two things as a height and width
-            Text("आगामी कार्यक्रम",
-                style: TextStyle(fontSize: 12, fontWeight: FontWeight.normal)),
-
-          ],
-        ),
-      ),
-
-      // strat the body UI from the center
-      body: Center(
-
-        // inside center i use the column and build the UI
-        child: Column(
-          children: [
-
-            Expanded(
-              // List view builder help to manage the dynamic data and access elements
-              child: ListView.builder(
-                itemCount: 4,
-                itemBuilder: (context, index) {
-                  return EventCard();
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-      // using this one we add the bottom navbar and apply the style.
-       bottomNavigationBar: BottomNavigationBar(
-         currentIndex: 0,
-
-          type: BottomNavigationBarType.fixed,
-
-        selectedItemColor: Colors.orange,
-        unselectedItemColor: Colors.grey,
-
-        items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-          BottomNavigationBarItem(icon: Icon(Icons.event),label: "Event"),
-          BottomNavigationBarItem(icon: Icon(Icons.library_add), label: "Library"),
-          BottomNavigationBarItem(icon: Icon(Icons.update), label: "Updates"),
-        ],
-      ),
-    );
-  }
-}
-
-// so using the separated class we can call the multiples times in the home page. that is main concept
-class EventCard extends StatelessWidget
-{
-  const EventCard({super.key});
-
-  Widget build(BuildContext context)
-  {
-    return InkWell(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => NextPage()),
-        );
-      },
-
-      child: Container(
-        margin: EdgeInsets.all(12), // space between the outside of the container
-        // design of the box using the decoration and inside use the box decoration and input decoration
-        decoration: BoxDecoration(
-          color: Colors.white, // back ground colour use here
-          borderRadius: BorderRadius.circular(14), // crete the circle style using border radius
-
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black26,
-              blurRadius: 6,
-              offset: Offset(0, 3),
-            )
-          ],
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Politician Details"),
+          backgroundColor: Colors.blue,
+          leading: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.arrow_back)),
         ),
 
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.all(16),
 
-            // this is take for the full width and change the only corner using the top right and left
-            // border radius help to that moment
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(14),
-                topRight: Radius.circular(14),
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
 
-              child: Image.network(
-                "assets/images/img.png",
-                height: 210,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-            ),
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: NetworkImage(profileUrl),
+                ),
 
-            Padding(
-              padding: const EdgeInsets.all(18),
+                SizedBox(height: 4),
 
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+                Text(
+                  "Name: Sharad Pawar",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
 
-                  Text(
-                    "Morning Sadhana Session",
-                    style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.orange,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                SizedBox(height: 3),
 
-                  SizedBox(height: 8),
+                Text("Party: Ncp"),
 
-                  Row(
-                    children: [
-                      Icon(Icons.location_on, size: 20, color: Colors.grey),
-                      SizedBox(width: 6),
+                SizedBox(height: 3),
 
-                      Text(
-                        "Ananddham, Ahilyanagar",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
+                Text("State: Maharashtra"),
+
+                SizedBox(height: 5),
+
+                Row(
+                  children: [
+                    TextButton(
+                      onPressed: () {},
+
+                      style: OutlinedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(5),
                         ),
                       ),
-                    ],
+
+                      child: Text("Follow"),
+                    ),
+
+                    SizedBox(width: 8),
+
+                    Text("Followers: 1000"),
+                  ],
+                ),
+
+                SizedBox(height: 10),
+
+                SizedBox(
+                  height: 320,
+                  child: GridView.builder(
+                    itemCount: 9,
+
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 7,
+                      mainAxisSpacing: 10,
+                      childAspectRatio: 1.6,
+                    ),
+
+                    itemBuilder: (context, index) {
+                      return ImagesData();
+                    },
                   ),
+                ),
 
-                  SizedBox(height: 8),
-
-                  Row(
-                    children: [
-                      Icon(Icons.access_time, size: 18, color: Colors.grey),
-                      SizedBox(width: 6),
-
-                      Text(
-                        "6:00 AM - 7:30 AM",
-                        style: TextStyle(fontSize: 14),
-                      ),
-
-                      SizedBox(width: 20),
-
-                      Icon(Icons.calendar_today, size: 18, color: Colors.grey),
-                      SizedBox(width: 6),
-
-                      Text(
-                        "March 7, 2026",
-                        style: TextStyle(fontSize: 14),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );
+  }
+}
 
+class ImagesData extends StatefulWidget {
+  const ImagesData({super.key});
+
+  @override
+  State<ImagesData> createState() => _ImagesDataState();
+}
+
+class _ImagesDataState extends State<ImagesData> {
+
+  bool isStar = false;
+
+  final String pawarImage =
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9vUSltXsxP4CxaFQ5uIcBdXf63w4kQkOFRA&s";
+
+  @override
+  Widget build(BuildContext context) {
+
+    return Stack(
+      children: [
+
+        Image.network(
+          pawarImage,
+          height: 100,
+          width: 160,
+          fit: BoxFit.cover,
+        ),
+
+        Positioned(
+          right: 4,
+          top: 3,
+          child: IconButton(
+            onPressed: () {
+    // method help to on click data show as a dynamic
+              setState(() {
+                isStar =!isStar; //here updated the value and store updated using the setState
+              });
+
+            },
+
+            icon: Icon(
+              isStar ? Icons.star : Icons.star_border,
+              color: isStar ? Colors.yellow : Colors.white,
+              size: 30,
+            ),
+          ),
+        )
+      ],
+    );
   }
 }
